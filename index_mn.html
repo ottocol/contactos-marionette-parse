@@ -1,0 +1,75 @@
+<html>
+<head>
+  <style>
+      .contacto {
+          border: 1px solid;
+          border-radius: 5px;
+          padding: 1em;
+          margin-top: 1em;
+          background-color: rgb(200,240,0);
+      }
+
+      .nuevo_contacto {
+      }
+  </style>
+  <meta charset="utf8">
+</head>
+<body>
+  <h1>Tus contactos</h1>
+  <div id="nuevo_contacto" class="nuevo_contacto"></div>
+  <div id="agenda"></div>
+
+
+  <script id="nuevo_contacto_tmpl" type="text/x-mustache-template">
+      <label for="nombre_edit">Nombre:</label>
+      <input type="text" id="nombre"> <br>
+      <label for="apellidos_edit">Apellidos:</label>
+      <input type="text" id="apellidos"> <br>
+      <label for="email_edit">Email:</label>
+      <input type="text" id="email"> <br>
+      <input type="button" id="boton_nuevo" value="Nuevo">
+  </script>
+
+
+  <!-- plantilla para listar un único contacto -->
+  <script id="contacto_tmpl" type="text/x-mustache-template">
+      <b>{{nombre}} {{apellidos}}</b> <br>
+      <em>{{email}}</em> <br>
+      <input type="button" class="boton_borrar" value="Borrar">
+      <input type="button" class="boton_editar" value="Editar">
+  </script>
+
+  <!-- plantilla para editar un único contacto -->
+  <script id="contacto_edit_tmpl" type="text/x-mustache-template">
+      <label for="nombre_edit">Nombre:</label>
+      <input type="text" value="{{nombre}}" id="nombre_edit"> <br>
+      <label for="apellidos_edit">Apellidos:</label>
+      <input type="text" value="{{apellidos}}" id="apellidos_edit"> <br>
+      <label for="email_edit">Email:</label>
+      <input type="text" value="{{email}}" id="email_edit"> <br>
+      <input type="button" class="boton_guardar" value="Guardar">
+  </script>
+
+
+  <script src="js/lib/underscore-min.js"></script>
+  <script src="js/lib/jquery-2.1.3.min.js"></script>
+  <script src="js/lib/backbone-min.js"></script>
+  <script src="js/lib/backbone.marionette.min.js"></script>  
+  <script src="js/lib/mustache.js"></script>
+  <script src="js/parse.js"></script>
+  <script src="js/modelos.js"></script>
+  <script src="js/vistas.js"></script>
+
+  <script>
+  var agenda = new Agenda();
+  var va = new VistaAgenda({collection:agenda});
+  va.render();
+  var vnc = new VistaNuevoContacto({collection:agenda});
+  vnc.render();
+  agenda.fetch().done(function(){
+    console.log(agenda.length + " contactos descargados")
+  })
+       
+  </script>
+</body>
+</html>
